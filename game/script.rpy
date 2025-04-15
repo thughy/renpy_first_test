@@ -11,21 +11,49 @@ define mage = Character("法师", color="#8c8cff")
 define guardian = Character("遗迹守护者", color="#ffcc00")
 define ghost = Character("古代幽灵", color="#aaaaff")
 
-# Define images for characters
-image elder normal = "images/elder_normal.png"
-image merchant normal = "images/merchant_normal.png"
-image warrior normal = "images/warrior_normal.png"
-image mage normal = "images/mage_normal.png"
-image guardian normal = "images/guardian_normal.png"
-image ghost normal = "images/ghost_normal.png"
+# Define images for characters - 使用动态生成的角色图像替代不存在的图片文件
+init python:
+    # 创建角色占位图像的函数
+    def character_placeholder(name, color):
+        # 创建一个圆形头像和名字标签
+        base = Solid(color, xsize=300, ysize=500)
+        circle = Solid("#ffffff33", xsize=200, ysize=200)
+        text_name = Text(name, size=30, color="#ffffff", font="fonts/wqy-microhei.ttc")
+        return Composite(
+            (300, 500),
+            (0, 0), base,
+            (50, 100), circle,
+            (50, 350), text_name
+        )
 
-# Define backgrounds
-image bg village = "images/backgrounds/bg_village.jpg"
-image bg forest = "images/backgrounds/bg_forest.jpg"
-image bg cave = "images/backgrounds/bg_cave.jpg"
-image bg castle = "images/backgrounds/bg_castle.jpg"
-image bg ruins = "images/backgrounds/bg_ruins.jpg"
-image bg throne = "images/backgrounds/bg_throne.jpg"
+# 定义角色图像
+image elder normal = character_placeholder("村长", "#c8c8ff")
+image merchant normal = character_placeholder("商人", "#ffc8c8")
+image warrior normal = character_placeholder("战士", "#ff8c8c")
+image mage normal = character_placeholder("法师", "#8c8cff")
+image guardian normal = character_placeholder("遗迹守护者", "#ffcc00")
+image ghost normal = character_placeholder("古代幽灵", "#aaaaff")
+
+# Define backgrounds - 使用动态生成的背景替代不存在的图片文件
+init python:
+    # 创建不同颜色的纯色背景作为占位符
+    village_bg = Solid("#7a936c")  # 村庄：绿色
+    forest_bg = Solid("#2d4c1e")   # 森林：深绿色
+    cave_bg = Solid("#4a4a4a")     # 洞穴：深灰色
+    castle_bg = Solid("#8c8c9e")   # 城堡：蓝灰色
+    ruins_bg = Solid("#9e8c6c")    # 遗迹：棕色
+    throne_bg = Solid("#6c4c4c")   # 王座：红棕色
+    
+    # 添加一些纹理使背景看起来更有层次感
+    grid_pattern = Frame(Solid("#00000022"), 50, 50)
+
+# 定义背景图像
+image bg village = Composite((1280, 720), (0, 0), village_bg, (0, 0), grid_pattern)
+image bg forest = Composite((1280, 720), (0, 0), forest_bg, (0, 0), grid_pattern)
+image bg cave = Composite((1280, 720), (0, 0), cave_bg, (0, 0), grid_pattern)
+image bg castle = Composite((1280, 720), (0, 0), castle_bg, (0, 0), grid_pattern)
+image bg ruins = Composite((1280, 720), (0, 0), ruins_bg, (0, 0), grid_pattern)
+image bg throne = Composite((1280, 720), (0, 0), throne_bg, (0, 0), grid_pattern)
 
 # Initialize variables
 init python:
