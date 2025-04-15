@@ -53,8 +53,8 @@ init python:
     renpy.image("gui/button/selected_hover.png", gui.button_selected)
     
     ######### 字体设置 #########
-    # 使用系统默认字体
-    gui.default_font = ""
+    # 使用文泉驿微米黑字体
+    gui.default_font = "fonts/wqy-microhei.ttc"
     
     # 主菜单转场特效
     gui.main_menu_transition = dissolve
