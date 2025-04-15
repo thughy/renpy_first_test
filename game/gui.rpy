@@ -54,7 +54,7 @@ init python:
     
     ######### 字体设置 #########
     # 使用系统默认字体
-    gui.default_font = None
+    gui.default_font = ""
     
     # 主菜单转场特效
     gui.main_menu_transition = dissolve

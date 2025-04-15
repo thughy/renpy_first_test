@@ -3,8 +3,8 @@
 # 游戏名称
 define config.name = "命运之路"
 
-# 开发者名称
-define config.developer = "RPG开发者"
+# 开发者名称和模式设置（True开启开发者模式）
+define config.developer = True
 
 # 游戏版本
 define config.version = "1.0"

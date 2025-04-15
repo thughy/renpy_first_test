@@ -13,10 +13,11 @@ init offset = -1
 ################################################################################
 
 style default:
-    font None
+    font "fonts/wqy-microhei.ttc"
     size 24
     color "#ffffff"
     language "unicode"
+    outlines [ (1, "#000000", 0, 0) ]
 
 style input:
     color "#ffffff"
@@ -30,14 +31,18 @@ style gui_text:
     color "#ffffff"
 
 style button:
-    background "gui/button/idle.png"
-    hover_background "gui/button/hover.png"
+    background Frame("gui/button/idle.png", 5, 5, 5, 5)
+    hover_background Frame("gui/button/hover.png", 5, 5, 5, 5)
+    padding (20, 10)
+    xsize 300
 
 style button_text is gui_text:
     color "#888888"
     hover_color "#66c1e0"
     selected_color "#ffffff"
     yalign 0.5
+    font "fonts/wqy-microhei.ttc"
+    outlines [ (1, "#000000", 0, 0) ]
 
 style label_text is gui_text:
     color "#0099cc"
@@ -81,7 +86,7 @@ style window:
     yalign 0.99
     ysize 185
 
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background Frame("gui/textbox.png", 25, 25, 25, 25)
 
 style namebox:
     xpos 240
@@ -121,12 +126,12 @@ screen main_menu():
 
         text _("命运之路") style "main_menu_title"
 
-        textbutton _("开始游戏") action Start()
-        textbutton _("载入游戏") action ShowMenu("load")
-        textbutton _("设置") action ShowMenu("preferences")
-        textbutton _("关于") action ShowMenu("about")
-        textbutton _("帮助") action Help()
-        textbutton _("退出") action Quit(confirm=not main_menu)
+        textbutton _("开始游戏") action Start() xalign 0.5
+        textbutton _("载入游戏") action ShowMenu("load") xalign 0.5
+        textbutton _("设置") action ShowMenu("preferences") xalign 0.5
+        textbutton _("关于") action ShowMenu("about") xalign 0.5
+        textbutton _("帮助") action Help() xalign 0.5
+        textbutton _("退出") action Quit(confirm=not main_menu) xalign 0.5
 
 style main_menu_frame is empty
 style main_menu_vbox is vbox
@@ -155,6 +160,8 @@ style main_menu_title:
     color "#fff"
     outlines [ (2, "#000", 0, 0) ]
     size 45
+    font "fonts/wqy-microhei.ttc"
+    xalign 0.5
 
 ################################################################################
 # 游戏菜单通用样式
@@ -221,7 +228,9 @@ screen choice(items):
 
 style choice_vbox is vbox
 style choice_button is button
-style choice_button_text is button_text
+style choice_button_text is button_text:
+    font "fonts/wqy-microhei.ttc"
+    color "#cccccc"
 
 style choice_vbox:
     xalign 0.5
@@ -229,8 +238,8 @@ style choice_vbox:
     spacing 22
 
 style choice_button:
-    background "gui/button/idle.png"
-    hover_background "gui/button/hover.png"
+    background Frame("gui/button/idle.png", 5, 5, 5, 5)
+    hover_background Frame("gui/button/hover.png", 5, 5, 5, 5)
     xalign 0.5
     padding (20, 10)
 
@@ -240,6 +249,7 @@ style choice_button_text:
     selected_color "#ffffff"
     xalign 0.5
     size 24
+    font "fonts/NotoSansSC-Regular.otf"
     outlines [ (1, "#000", 0, 0) ]
 
 ################################################################################
@@ -314,6 +324,64 @@ screen stats():
                 text _("- 古老钥匙")
             if has_destiny_heart:
                 text _("- 命运之心")
+
+################################################################################
+# 关于屏幕
+################################################################################
+
+screen about():
+    tag menu
+    style_prefix "about"
+    
+    add Solid("#000000")
+    
+    frame:
+        style "about_frame"
+        xalign 0.5
+        yalign 0.5
+        xpadding 40
+        ypadding 40
+        
+        vbox:
+            spacing 20
+            
+            label _("{b}关于 命运之路{/b}"):
+                xalign 0.5
+            
+            text _("命运之路是一款角色扮演冒险游戏，玩家将踏上一段充满挑战与选择的旅程。")
+            text _("版本: 1.0.0")
+            text _("开发者: 游戏开发团队")
+            text _("© 2025 版权所有")
+            
+            null height 20
+            
+            textbutton _("返回") action Return() xalign 0.5
+
+style about_frame is default
+style about_label is default
+style about_text is default
+style about_button is default
+style about_button_text is default
+
+style about_frame:
+    background Solid("#222222")
+    xsize 600
+
+style about_label_text:
+    color "#ffffff"
+    size 30
+    xalign 0.5
+
+style about_text:
+    color "#cccccc"
+    size 22
+    xalign 0.5
+
+style about_button:
+    xalign 0.5
+
+style about_button_text:
+    xalign 0.5
 
 ################################################################################
 # 初始化默认界面
