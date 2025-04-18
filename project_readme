@@ -6,3 +6,6 @@
 请你设计一个rpg游戏（题目自拟），使用renpy的一些默认元素素材，实现这个rpg。
 要求，rpg中具有玩家和npc的对话，以及一定的数值体系设计，通过玩家和npc的对话，来动态路由到不同的发展剧情中。
 请你完整的实现这个rpg游戏，实现纯代码开发。开发完成后，使用renpy的环境进行调试。
+
+run renpy cmd:
+~/renpy/renpy-8.3.7-sdk/renpy.app/Contents/MacOS/renpy .

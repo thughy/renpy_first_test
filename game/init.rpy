@@ -41,12 +41,12 @@ init -5 python:
 init -5 python:
     # 背景图像列表
     background_images = [
-        ("images/backgrounds/bg_village.jpg", "#4a6f3f"),  # 村庄：绿色
-        ("images/backgrounds/bg_forest.jpg", "#1a4a1a"),   # 森林：深绿色
-        ("images/backgrounds/bg_cave.jpg", "#333344"),     # 洞穴：深蓝灰色
-        ("images/backgrounds/bg_castle.jpg", "#666677"),   # 城堡：灰色
-        ("images/backgrounds/bg_ruins.jpg", "#554433"),    # 遗迹：棕色
-        ("images/backgrounds/bg_throne.jpg", "#775544")    # 王座：红棕色
+        ("images/backgrounds/bg_village.png", "#4a6f3f"),  # 村庄：绿色
+        ("images/backgrounds/bg_forest.png", "#1a4a1a"),   # 森林：深绿色
+        ("images/backgrounds/bg_cave.png", "#333344"),     # 洞穴：深蓝灰色
+        ("images/backgrounds/bg_castle.png", "#666677"),   # 城堡：灰色
+        ("images/backgrounds/bg_ruins.png", "#554433"),    # 遗迹：棕色
+        ("images/backgrounds/bg_throne.png", "#775544")    # 王座：红棕色
     ]
     
     # 检查每个背景图像

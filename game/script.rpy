@@ -26,34 +26,28 @@ init python:
             (50, 350), text_name
         )
 
-# 定义角色图像
-image elder normal = character_placeholder("村长", "#c8c8ff")
-image merchant normal = character_placeholder("商人", "#ffc8c8")
-image warrior normal = character_placeholder("战士", "#ff8c8c")
-image mage normal = character_placeholder("法师", "#8c8cff")
-image guardian normal = character_placeholder("遗迹守护者", "#ffcc00")
-image ghost normal = character_placeholder("古代幽灵", "#aaaaff")
+# 定义角色图像的变换，调整大小以适应游戏界面
+transform character_scale:
+    zoom 0.3  # 缩放图像到原来的0.3倍，缩小一点
+    yalign 1.0  # 垂直对齐到底部，使角色站在地上
+    xalign 0.5  # 水平居中
 
-# Define backgrounds - 使用动态生成的背景替代不存在的图片文件
-init python:
-    # 创建不同颜色的纯色背景作为占位符
-    village_bg = Solid("#7a936c")  # 村庄：绿色
-    forest_bg = Solid("#2d4c1e")   # 森林：深绿色
-    cave_bg = Solid("#4a4a4a")     # 洞穴：深灰色
-    castle_bg = Solid("#8c8c9e")   # 城堡：蓝灰色
-    ruins_bg = Solid("#9e8c6c")    # 遗迹：棕色
-    throne_bg = Solid("#6c4c4c")   # 王座：红棕色
-    
-    # 添加一些纹理使背景看起来更有层次感
-    grid_pattern = Frame(Solid("#00000022"), 50, 50)
+# 定义角色图像 - 使用实际PNG图片并应用缩放变换
+image elder normal = At("images/elder_normal.png", character_scale)
+image merchant normal = At("images/merchant_normal.png", character_scale)
+image warrior normal = At("images/warrior_normal.png", character_scale)
+image mage normal = At("images/mage_normal.png", character_scale)
+image guardian normal = At("images/guardian_normal.png", character_scale)
+image ghost normal = At("images/ghost_normal.png", character_scale)
 
+# Define backgrounds - 使用实际PNG图片文件替代占位符
 # 定义背景图像
-image bg village = Composite((1280, 720), (0, 0), village_bg, (0, 0), grid_pattern)
-image bg forest = Composite((1280, 720), (0, 0), forest_bg, (0, 0), grid_pattern)
-image bg cave = Composite((1280, 720), (0, 0), cave_bg, (0, 0), grid_pattern)
-image bg castle = Composite((1280, 720), (0, 0), castle_bg, (0, 0), grid_pattern)
-image bg ruins = Composite((1280, 720), (0, 0), ruins_bg, (0, 0), grid_pattern)
-image bg throne = Composite((1280, 720), (0, 0), throne_bg, (0, 0), grid_pattern)
+image bg village = "images/backgrounds/bg_village.png"
+image bg forest = "images/backgrounds/bg_forest.png"
+image bg cave = "images/backgrounds/bg_cave.png"
+image bg castle = "images/backgrounds/bg_castle.png"
+image bg ruins = "images/backgrounds/bg_ruins.png"
+image bg throne = "images/backgrounds/bg_throne.png"
 
 # Initialize variables
 init python:
