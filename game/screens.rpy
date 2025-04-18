@@ -349,7 +349,7 @@ screen about():
             text _("命运之路是一款角色扮演冒险游戏，玩家将踏上一段充满挑战与选择的旅程。")
             text _("版本: 1.0.0")
             text _("开发者: 游戏开发团队")
-            text _("© 2025 版权所有")
+            text _(" 2025 ")
             
             null height 20
             
@@ -427,4 +427,259 @@ init python:
     # 为可能缺失的函数提供默认实现
     gui.text_properties = lambda prefix="", accent=False: {}
     gui.button_properties = lambda prefix="": {}
-    gui.button_text_properties = lambda prefix="": {} 
+    gui.button_text_properties = lambda prefix="": {}
+    
+    # 定义文件存档相关设置
+    gui.file_slot_cols = 3
+    gui.file_slot_rows = 2
+    gui.slot_spacing = 10
+    gui.page_spacing = 10
+    gui.navigation_spacing = 10
+
+################################################################################
+# 游戏菜单样式
+################################################################################
+
+# 游戏菜单样式
+style game_menu_outer_frame is empty
+style game_menu_navigation_frame is empty
+style game_menu_content_frame is empty
+style game_menu_viewport is gui_viewport
+style game_menu_side is gui_side
+style game_menu_scrollbar is gui_vscrollbar
+
+style game_menu_label is gui_label
+style game_menu_label_text is gui_label_text
+
+style game_menu_outer_frame:
+    background "gui/overlay/game_menu.png"
+    bottom_padding 45
+    top_padding 120
+
+style game_menu_navigation_frame:
+    xsize 280
+    yfill True
+    background Solid("#22222280")
+
+style game_menu_content_frame:
+    left_margin 40
+    right_margin 40
+    top_margin 10
+    bottom_margin 10
+    background Solid("#22222280")
+
+style game_menu_viewport:
+    xfill True
+    yfill True
+
+style game_menu_vscrollbar:
+    unscrollable "hide"
+
+style game_menu_label:
+    xalign 0.5
+    ysize 120
+
+style game_menu_label_text:
+    size gui.title_text_size
+    color "#ffffff"
+    outlines [ (2, "#000", 0, 0) ]
+    yalign 0.5
+
+# 导航按钮样式
+style navigation_button is gui_button
+style navigation_button_text is gui_button_text
+
+style navigation_button:
+    size_group "navigation"
+    properties gui.button_properties("navigation_button")
+    xalign 0.5
+
+style navigation_button_text:
+    properties gui.button_text_properties("navigation_button")
+    xalign 0.5
+    yalign 0.5
+
+# 文件页面样式
+style page_label is gui_label
+style page_label_text is gui_label_text
+style page_button is gui_button
+style page_button_text is gui_button_text
+
+style slot_button is gui_button
+style slot_button_text is gui_button_text
+style slot_time_text is slot_button_text
+style slot_name_text is slot_button_text
+
+style page_label:
+    xpadding 50
+    ypadding 3
+
+style page_label_text:
+    text_align 0.5
+    layout "subtitle"
+    hover_color "#66c1e0"
+
+style page_button:
+    properties gui.button_properties("page_button")
+
+style page_button_text:
+    properties gui.button_text_properties("page_button")
+
+style slot_button:
+    properties gui.button_properties("slot_button")
+    background Frame("gui/button/idle.png", 5, 5, 5, 5)
+    hover_background Frame("gui/button/hover.png", 5, 5, 5, 5)
+
+style slot_button_text:
+    properties gui.button_text_properties("slot_button")
+    color "#888888"
+    hover_color "#66c1e0"
+
+################################################################################
+# 保存和加载屏幕
+################################################################################
+
+# 游戏菜单屏幕
+# 这个屏幕包含一个导航菜单和一个内容区域
+
+screen game_menu(title, scroll=None, yinitial=0.0):
+    style_prefix "game_menu"
+
+    if main_menu:
+        add Solid("#000000")
+    else:
+        add Solid("#00000080")
+
+    frame:
+        style "game_menu_outer_frame"
+
+        hbox:
+            # 左侧导航菜单
+            frame:
+                style "game_menu_navigation_frame"
+                vbox:
+                    style_prefix "navigation"
+                    xalign 0.5
+                    yalign 0.5
+                    spacing 10
+
+                    textbutton _("返回") action Return() 
+                    textbutton _("历史") action ShowMenu("history")
+                    textbutton _("保存") action ShowMenu("save")
+                    textbutton _("加载") action ShowMenu("load")
+                    textbutton _("设置") action ShowMenu("preferences")
+                    textbutton _("主菜单") action MainMenu()
+                    textbutton _("退出") action Quit()
+
+            # 右侧内容区域
+            frame:
+                style "game_menu_content_frame"
+                if scroll == "viewport":
+                    viewport:
+                        yinitial yinitial
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+
+                        side_yfill True
+
+                        vbox:
+                            transclude
+
+                elif scroll == "vpgrid":
+                    vpgrid:
+                        cols 1
+                        yinitial yinitial
+
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+                        pagekeys True
+
+                        side_yfill True
+
+                        transclude
+
+                else:
+                    transclude
+
+    # 标题
+    label title xalign 0.5 ypos 30
+
+    # 如果有快捷菜单，显示快捷菜单
+    if main_menu:
+        key "game_menu" action ShowMenu("main_menu")
+
+
+# 文件浏览屏幕
+# 用于保存和加载游戏
+
+screen file_slots(title):
+    default page_name_value = FilePageNameInputValue(pattern=_("{}页"), auto=_("自动"), quick=_("快速"))
+
+    tag menu
+
+    use game_menu(title):
+
+        fixed:
+            # 文件浏览器网格
+            grid gui.file_slot_cols gui.file_slot_rows:
+                style_prefix "slot"
+
+                xalign 0.5
+                yalign 0.5
+
+                spacing gui.slot_spacing
+
+                for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                    $ slot = i + 1
+
+                    button:
+                        action FileAction(slot)
+                        xminimum 300
+                        yminimum 150
+                        has vbox
+
+                        add FileScreenshot(slot) size (config.thumbnail_width, config.thumbnail_height)
+
+                        text FileTime(slot, format=_("{#file_time}%Y-%m-%d %H:%M"), empty=_("空存档位")):
+                            style "slot_time_text"
+
+                        text FileSaveName(slot):
+                            style "slot_name_text"
+
+                        key "save_delete" action FileDelete(slot)
+
+            # 分页按钮
+            hbox:
+                style_prefix "page"
+
+                xalign 0.5
+                yalign 1.0
+
+                spacing gui.page_spacing
+
+                textbutton _("上一页") action FilePagePrevious()
+
+                if config.has_quicksave:
+                    textbutton _("快速保存") action FilePage("quick")
+
+                # 页码范围
+                for page in range(1, 10):
+                    textbutton "[page]" action FilePage(page)
+
+                if config.has_autosave:
+                    textbutton _("自动保存") action FilePage("auto")
+
+                textbutton _("下一页") action FilePageNext()
+
+
+# 保存屏幕
+screen save():
+    use file_slots(_("保存游戏"))
+
+
+# 加载屏幕
+screen load():
+    use file_slots(_("加载游戏"))
